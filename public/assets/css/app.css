@@ -1,3 +1,7 @@
 .btn-primary {
 	background-color: '#568db3'!important;
 }
+
+.navbar-brand img {
+	max-height: 80px;
+}

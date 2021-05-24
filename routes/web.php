@@ -13,17 +13,16 @@ use Auth;
 |
 */
 
+require __DIR__.'/admin.php';
 
-// require __DIR__.'/auth.php';
 
 Route::middleware([ 'locale' ])->group(function () {
 	Route::get( '/' , [ HomeController::class , 'index' ]);
-
 	Route::get('/dashboard', function () {
 	    return view('dashboard');
 	})->middleware(['auth'])->name('dashboard');
-	Auth::routes();
 	Route::get( '/contact' , [ StaticController::class , 'contact' ]) -> name( 'contact' );
 	Route::get( '/home' , [ HomeController::class , 'index' ]) -> name( 'home' );
 	Route::get( '/set-locale/{locale}' , [ LocaleController::class , 'set' ]) -> name( 'setLocale' );
+	Auth::routes();
 });
