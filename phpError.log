@@ -1,0 +1,1 @@
+[Mon May 24 23:37:37.400300 2021] [php:error] [pid 18115] [client 37.252.89.226:57724] PHP Fatal error:  Namespace declaration statement has to be the very first statement or after any declare call in the script in /var/www/tumanyan/app/Http/Middleware/Locale.php on line 4
