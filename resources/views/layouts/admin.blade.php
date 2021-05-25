@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/design/muzei/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/design/muzei/images/favicon.ico" type="image/x-icon">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -22,12 +24,12 @@
     <link href="{{ asset('assets/css/admin.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 </head>
-<body>
+<body class="container-fluid">
     <input type="hidden" name="lang" value="{{ App::currentLocale() }}" />
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ url('/admin') }}">
                     <img src="/assets/img/logo_{{ App::currentLocale() }}.png">
                     {{ __( 'Admin Panel' ) }}
                 </a>
@@ -38,12 +40,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a href="{{ route( 'admin.users' ) }}" class="nav-link">{{ __( 'Users' ) }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route( 'books.index' ) }}" class="nav-link">{{ __( 'Books' ) }}</a>
-                        </li>
+                        @authadmin
+                            <li class="nav-item">
+                                <a href="{{ route( 'admin.users' ) }}" class="nav-link">{{ __( 'Users' ) }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route( 'books.index' ) }}" class="nav-link">{{ __( 'Books' ) }}</a>
+                            </li>
+                        @endauthadmin
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -95,8 +99,10 @@
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"></script>
+    @yield( 'scripts_before' )
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/assets/js/admin.js"></script>
     @yield( 'scripts' )
 </body>
 </html>

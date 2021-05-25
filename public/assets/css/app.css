@@ -8,6 +8,9 @@
 
 
 /*COMMON*/
+.pointer {
+	cursor: pointer;
+}
 label {
 	color: #568db3;
 }

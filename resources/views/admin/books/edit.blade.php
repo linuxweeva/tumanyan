@@ -3,20 +3,21 @@
 @section( 'content' )
 <div class="">
 	<h1 class="admin-heading">{{ __( 'Add a book' ) }}</h1>
-    <form class="form" method="POST" action="{{ route( 'books.store' ) }}">
+    <form class="form" method="POST" action="{{ route( 'books.update' , $book -> id ) }}">
         @csrf
-        <input type="hidden" value="{{ $generatedId }}" name="id" required="" />
+        <input name="_method" type="hidden" value="PUT">
+        <input type="hidden" value="{{ $book -> id }}" name="id" required="" />
         <div class="form-group">
             <label>{{ __( 'Title (am)' ) }} <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" required="" autofocus="" name="title_am" value="{{ old( 'title_am' ) }}" />
+            <input type="text" class="form-control" required="" autofocus="" name="title_am" value="{{ $book -> title_am }}" />
         </div>
         <div class="form-group">
             <label>{{ __( 'Title (ru)' ) }}</label>
-            <input type="text" class="form-control" name="title_ru" value="{{ old( 'title_ru' ) }}" />
+            <input type="text" class="form-control" name="title_ru" value="{{ $book -> title_ru }}" />
         </div>
         <div class="form-group">
             <label>{{ __( 'Title (en)' ) }}</label>
-            <input type="text" class="form-control" name="title_en" value="{{ old( 'title_en' ) }}" />
+            <input type="text" class="form-control" name="title_en" value="{{ $book -> title_en }}" />
         </div>
         <div class="form-group">
             <label>{{ __( 'Author' ) }} <span class="text-danger">*</span></label>
@@ -36,15 +37,15 @@
         </div>
         <div class="form-group">
             <label>{{ __( 'Publish info (am)' ) }} <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" required="" autofocus="" name="publish_info_am" value="{{ old( 'publish_info_am' ) }}" />
+            <input type="text" class="form-control" required="" autofocus="" name="publish_info_am" value="{{ $book -> publish_info_am }}" />
         </div>
         <div class="form-group">
             <label>{{ __( 'Publish info (ru)' ) }}</label>
-            <input type="text" class="form-control" name="publish_info_ru" value="{{ old( 'publish_info_ru' ) }}" />
+            <input type="text" class="form-control" name="publish_info_ru" value="{{ $book -> publish_info_ru }}" />
         </div>
         <div class="form-group">
             <label>{{ __( 'Publish info (en)' ) }}</label>
-            <input type="text" class="form-control" name="publish_info_en" value="{{ old( 'publish_info_en' ) }}" />
+            <input type="text" class="form-control" name="publish_info_en" value="{{ $book -> publish_info_en }}" />
         </div>
         <div class="form-group">
             <label>{{ __( 'Language' ) }} <span class="text-danger">*</span></label>
@@ -65,7 +66,7 @@
         <div class="form-group row">
             <label class="col-12">{{ __( 'PDF file' ) }} <span class="text-danger">*</span></label>
             <div class="col">
-                <input type="text" data-input="pdf" required="" class="form-control" name="pdf_url" value="{{ old( 'pdf_url' ) }}" />
+                <input type="text" data-input="pdf" required="" class="form-control" name="pdf_url" value="{{ $book -> pdf_url }}" />
             </div>
             <div class="col-2 col-md-1">
                 <i class="fa fa-2x fa-upload mx-auto pointer upload_pdf" data-type="pdf"></i>
@@ -75,7 +76,7 @@
         <div class="form-group row">
             <label class="col-12">{{ __( 'PDF partial' ) }}</label>
             <div class="col">
-                <input type="text" data-input="pdf_partial" name="pdf_partial_url" class="form-control" value="{{ old( 'pdf_partial_url' ) }}" />
+                <input type="text" data-input="pdf_partial" name="pdf_partial_url" class="form-control" value="{{ $book -> pdf_partial_url }}" />
             </div>
             <div class="col-2 col-md-1">
                 <i class="fa fa-2x fa-upload mx-auto pointer upload_pdf" data-type="pdf_partial"></i>
@@ -85,7 +86,7 @@
 
         <div class="form-group">
             <label>{{ __( 'Price' ) }}</label>
-            <input type="text" class="form-control" name="price" value="{{ old( 'price' ) }}" />
+            <input type="text" class="form-control" name="price" value="{{ $book -> price }}" />
         </div>
         <div class="form-group">
             <button id="submit" class="btn btn-success btn-block">{{ __( 'Save' ) }}</button>

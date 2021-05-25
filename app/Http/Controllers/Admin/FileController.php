@@ -19,6 +19,7 @@ class FileController extends Controller
         $this->middleware( 'admin' );
     }
     protected function createFile ( $file , $type , $bookId ) {
+        File::where( 'type_id' , $bookId ) -> whereType( $type ) -> delete();
         $filePath = $file -> getClientOriginalName();
         $fileName = pathinfo( $filePath , PATHINFO_FILENAME );
         $extension = pathinfo( $filePath , PATHINFO_EXTENSION );
@@ -32,6 +33,7 @@ class FileController extends Controller
         $size = filesize( $path );
         $input = [
             'type_id' => $bookId,
+            'tmp_id' => $bookId,
             'type' => $type,
             'path' => $path,
             'size' => $size,
@@ -47,7 +49,7 @@ class FileController extends Controller
         if ( strtolower( $extension ) !== 'pdf' ) {
             return response() -> json([ 'status' => 'error' ] , 413 );
         }
-        $res = $this -> createFile( $file , "full" , $req -> bookId );
+        $res = $this -> createFile( $file , $req -> type , $req -> bookId );
         return response() -> json([ 'status' => 'success' , 'response' => $res ] , 200 );
     }
 

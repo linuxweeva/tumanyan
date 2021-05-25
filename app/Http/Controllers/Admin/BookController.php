@@ -9,6 +9,7 @@ use App\Models\Author;
 use App\Models\Section;
 use App\Models\Language;
 use App\Models\Type;
+use App\Models\File;
 
 class BookController extends Controller
 {
@@ -60,9 +61,11 @@ class BookController extends Controller
      */
     public function store(Request $req ) {
         // CHECK IF ID EXISTS MOVE FILES ID AND NEW RECORD ID
-        $input = $req -> except( '_token' , 'pdf_url' );
-        Book::create( $input );
-        dd($input);
+        $input = $req -> except( 'id' , '_token' , 'pdf_url' , 'pdf_partial_url' );
+        $tmpId = $req -> id;
+        $input[ 'price' ] = $input[ 'price' ] ?? 0;
+        $book = Book::create( $input );
+        File::where( 'type_id' , $tmpId ) -> update([ 'type_id' => $book -> id ]);
         return redirect() -> route( 'books.index' );
     }
 
@@ -85,6 +88,9 @@ class BookController extends Controller
      */
     public function edit($id)
     {
+        $data = $this -> getMoreData();
+        $data[ 'book' ] = Book::findOrFail( $id );
+        return view( 'admin.books.edit' , $data );
         //
     }
 
@@ -95,9 +101,15 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, $id)
     {
-        //
+        $input = $req -> except( 'id' , '_token' , 'pdf_url' , 'pdf_partial_url' , '_method' );
+        $id = $req -> id;
+        $input[ 'price' ] = $input[ 'price' ] ?? 0;
+        $book = Book::findOrFail( $id ) -> update( $input );
+        // File::where( 'type_id' , $tmpId ) -> update([ 'type_id' => $book -> id ]);
+        return redirect() -> route( 'books.index' );
+        dd($req->all());
     }
 
     /**
@@ -106,8 +118,8 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function delete($id) {
+        Book::find( $id )->delete();
+        return redirect() -> back();
     }
 }

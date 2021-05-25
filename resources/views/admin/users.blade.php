@@ -1,7 +1,7 @@
 @extends( 'layouts.admin' )
 
 @section( 'content' )
-<div class="container">
+<div class="">
 	<h1 class="admin-heading">{{ __( 'Users' ) }}</h1>
     <table id='data-table' class="table table-striped">
     	<thead>

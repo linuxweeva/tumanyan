@@ -10,5 +10,6 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'admin' ] ] , function () 
 	Route::get( '/' , [ AdminController::class , 'home' ]) -> name( 'admin.home' );
 	Route::get( '/users' , [ AdminController::class , 'users' ]) -> name( 'admin.users' );
 	Route::resource( 'books' , BookController::class);
+	Route::get( '/books.delete/{id}' , [ BookController::class , 'delete' ]) -> name( 'books.delete' );
 	Route::post( '/upload-pdf' , [ FileController::class , 'uploadPdf' ]) -> name( 'admin.uploadPdf' );
 });
