@@ -1,7 +1,62 @@
 .btn-primary {
-	background-color: '#568db3'!important;
+	background-color: #568db3!important;
 }
 
 .navbar-brand img {
 	max-height: 80px;
 }
+
+
+/*COMMON*/
+label {
+	color: #568db3;
+}
+@media only screen and (max-width: 768px) {
+	.label-form {
+		width: 100%;
+		padding-top: 0;
+		padding-bottom: 5px;
+	}
+}
+.form-control {
+	border: 1px solid #568db3;
+}
+.flex-1 {
+	flex: 1;
+}
+.flex-2 {
+	flex: 2;
+}
+.iti__flag {background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/img/flags.png");}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .iti__flag {background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/img/flags@2x.png");}
+}
+
+/*COMMON*/
+
+
+/*ACCOUNT*/
+.account-heading {
+	color: #568db3;
+	text-align: center;
+	margin-bottom: 2vh;
+}
+.account-container {
+	width: 75%;
+	margin: auto;
+	margin-top: 4vh;
+	margin-bottom: 4vh;
+	border-radius: 5px;
+	border: 2px solid #568db3;
+	padding: 20px;
+}
+@media only screen and (max-width: 768px) {
+  .account-container {
+	width: 100%;
+	margin-left: 10px;
+	margin-right: 10px;
+  }
+}
+
+/*ACCOUNT*/

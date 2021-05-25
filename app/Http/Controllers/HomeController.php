@@ -27,4 +27,8 @@ class HomeController extends Controller
         // App::setLocale( "am" );
         return view( 'home' );
     }
+    public function dashboard()
+    {
+        return redirect() -> route( 'home' );
+    }
 }

@@ -3,27 +3,54 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use App\Models\User;
 
-class StaticController extends Controller
+
+class AccountController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    // public function contact()
-    // {
-    //     return view( 'static.contact' );
-    //     //
-    // }
-    public function donation() {
-        
-        return view( 'static.donation' );
+    public function __construct()
+    {
+        $this -> middleware( 'auth' );
     }
-    public function about() {
-        
-        return view( 'static.about' );
+
+
+    public function index () {
+        $user = Auth::user();
+        $data = [
+            'user' => $user
+        ];
+        return view( 'account.index' , $data );
     }
+    public function updateAccount ( Request $req ) {
+        $user = Auth::user();
+        $updateData = $req -> only([
+            'name' ,
+            'last_name',
+            'phone',
+            'email',
+            'password'
+        ]);
+        if ( $updateData[ 'password' ] === $user -> password ) unset( $updateData[ 'password' ] );
+        User::whereId( $user -> id ) -> update( $updateData );
+        return redirect() -> route( 'account' );
+        return $this -> index();
+        return view( 'account.index' );
+    }
+
+    public function library () {
+        return view( 'account.library' );
+    }
+
+    public function refill () {
+        return redirect( 'https://www.inecobank.am/hy/Individual' );
+    }
+
     /**
      * Show the form for creating a new resource.
      *

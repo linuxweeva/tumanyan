@@ -8,10 +8,6 @@
     <h2>Some text</h2>
     <p>Some text</p>
 </div>
-@include( 'partials.filter' )
-    <div class="row justify-content-center">
-        bla bla bla
-    </div>
 @include( 'partials.other-links' )
 @include( 'partials.email-subscribe' )
 </div>
