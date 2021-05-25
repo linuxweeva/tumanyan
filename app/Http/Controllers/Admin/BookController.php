@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use Auth;
+use App\Models\Book;
+use App\Models\Author;
+use App\Models\Section;
+use App\Models\Language;
+use App\Models\Type;
 
-class AdminController extends Controller
+class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,32 +21,14 @@ class AdminController extends Controller
     {
         $this->middleware( 'admin' );
     }
-    public function home () {
-        return view( 'admin.home' );
-    }
-    public function loginView () {
-        return view( 'admin.login' );
-    }
-    public function users () {
-        $users = User::where( 'id' , '!=' , Auth::user() -> id ) -> get();
+    public function index()
+    {
+        $books = Book::all();
         $data = [
-            'users' => $users
+            'books' => $books,
         ];
-        return view( 'admin.users' , $data );
-    }
-    public function login ( Request $req ) {
-        $userCheckRole = User::whereEmail( $req -> email ) -> whereRole( 'admin' ) -> first();
-        if ( null === $userCheckRole ) {
-            return redirect() -> route( 'login' );
-        }
-        $credentials = $req -> only( 'email' , 'password' );
-        if ( Auth::attempt( $credentials ) ) {
-            return redirect( '/admin' );
-        } else {
-            return redirect() -> back() -> withInput( $req -> all() ) -> withErrors([
-                'password' => __( 'Incorrect password' )
-            ]);
-        }
+        return view( 'admin.books.index' , $data );
+        //
     }
 
     /**
@@ -51,8 +36,19 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected function getMoreData() {
+        $resp = [];
+        $resp[ 'authors' ] = Author::all();
+        $resp[ 'sections' ] = Section::all();
+        $resp[ 'languages' ] = Language::all();
+        $resp[ 'types' ] = Type::all();
+        $resp[ 'generatedId' ] = rand( 455425 , 2355553535353 );
+        return $resp;
+    }
     public function create()
     {
+        $data = $this -> getMoreData();
+        return view( 'admin.books.create' , $data );
         //
     }
 
@@ -62,9 +58,12 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $req ) {
+        // CHECK IF ID EXISTS MOVE FILES ID AND NEW RECORD ID
+        $input = $req -> except( '_token' , 'pdf_url' );
+        Book::create( $input );
+        dd($input);
+        return redirect() -> route( 'books.index' );
     }
 
     /**

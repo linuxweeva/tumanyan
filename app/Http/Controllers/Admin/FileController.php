@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Auth;
+use App\Models\File;
 
-class AdminController extends Controller
+class FileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,32 +18,37 @@ class AdminController extends Controller
     {
         $this->middleware( 'admin' );
     }
-    public function home () {
-        return view( 'admin.home' );
-    }
-    public function loginView () {
-        return view( 'admin.login' );
-    }
-    public function users () {
-        $users = User::where( 'id' , '!=' , Auth::user() -> id ) -> get();
-        $data = [
-            'users' => $users
+    protected function createFile ( $file , $type , $bookId ) {
+        $filePath = $file -> getClientOriginalName();
+        $fileName = pathinfo( $filePath , PATHINFO_FILENAME );
+        $extension = pathinfo( $filePath , PATHINFO_EXTENSION );
+        $rand = rand( 10 , 100 );
+        $fileDir = "/{$type}_{$rand}.{$extension}";
+        $url = env( 'PDF_PATH_URL' ) . "/{$bookId}{$fileDir}";
+        $absolute_url = env( 'APP_URL' ) . $url;
+        $parentDir = env( 'PDF_PATH' ) . '/' . $bookId;
+        $path = "{$parentDir}/{$fileDir}";
+        $file -> move ( $parentDir ,  $fileDir );
+        $size = filesize( $path );
+        $input = [
+            'type_id' => $bookId,
+            'type' => $type,
+            'path' => $path,
+            'size' => $size,
+            'url' => $url,
+            'absolute_url' => $absolute_url,
         ];
-        return view( 'admin.users' , $data );
+        $fileRecord = File::create( $input );
+        return $fileRecord;
     }
-    public function login ( Request $req ) {
-        $userCheckRole = User::whereEmail( $req -> email ) -> whereRole( 'admin' ) -> first();
-        if ( null === $userCheckRole ) {
-            return redirect() -> route( 'login' );
+    public function uploadPdf( Request $req ) {
+        $file = $req -> file;
+        $extension = pathinfo( $file -> getClientOriginalName() , PATHINFO_EXTENSION );
+        if ( strtolower( $extension ) !== 'pdf' ) {
+            return response() -> json([ 'status' => 'error' ] , 413 );
         }
-        $credentials = $req -> only( 'email' , 'password' );
-        if ( Auth::attempt( $credentials ) ) {
-            return redirect( '/admin' );
-        } else {
-            return redirect() -> back() -> withInput( $req -> all() ) -> withErrors([
-                'password' => __( 'Incorrect password' )
-            ]);
-        }
+        $res = $this -> createFile( $file , "full" , $req -> bookId );
+        return response() -> json([ 'status' => 'success' , 'response' => $res ] , 200 );
     }
 
     /**

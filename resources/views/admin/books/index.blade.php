@@ -2,7 +2,8 @@
 
 @section( 'content' )
 <div class="container">
-	<h1 class="admin-heading">{{ __( 'Users' ) }}</h1>
+	<h1 class="admin-heading">{{ __( 'Books' ) }}</h1>
+    <a href="{{ route( 'books.create' ) }}" class="btn btn-primary"><i class="fa fa-plus"></i> {{ __( 'Add' ) }}</a>
     <table id='data-table' class="table table-striped">
     	<thead>
     		<th>ID</th>
@@ -13,15 +14,15 @@
     		<th>{{ __( 'Balance' ) }}</th>
     		<th>{{ __( 'Status' ) }}</th>
     	</thead>
-    	@foreach( $users as $key => $user )
+    	@foreach( $books as $key => $book )
     		<tr>
-    			<td>{{ $user -> id }}</td>
-    			<td>{{ $user -> name }}</td>
-    			<td>{{ $user -> name }}</td>
-    			<td>{{ $user -> email }}</td>
-    			<td>{{ $user -> phone }}</td>
-    			<td>{{ $user -> balance }}</td>
-    			<td>{{ $user -> status }}</td>
+    			<td>{{ $book -> id }}</td>
+    			<td>{{ $book -> name }}</td>
+    			<td>{{ $book -> name }}</td>
+    			<td>{{ $book -> email }}</td>
+    			<td>{{ $book -> phone }}</td>
+    			<td>{{ $book -> balance }}</td>
+    			<td>{{ $book -> status }}</td>
     		</tr>
     	@endforeach
     	<tfoot>

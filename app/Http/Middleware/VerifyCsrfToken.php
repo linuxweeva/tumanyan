@@ -13,5 +13,9 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        'upload-pdf',
+        'upload-pdf-partial',
+        'admin/upload-pdf',
+        'admin/upload-pdf-partial',
     ];
 }

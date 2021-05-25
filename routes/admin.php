@@ -9,4 +9,6 @@ Route::post( 'admin/log-in' , [ AdminController::class , 'login' ]) -> name( 'ad
 Route::group([ 'prefix' => 'admin', 'middleware' => [ 'admin' ] ] , function () {
 	Route::get( '/' , [ AdminController::class , 'home' ]) -> name( 'admin.home' );
 	Route::get( '/users' , [ AdminController::class , 'users' ]) -> name( 'admin.users' );
+	Route::resource( 'books' , BookController::class);
+	Route::post( '/upload-pdf' , [ FileController::class , 'uploadPdf' ]) -> name( 'admin.uploadPdf' );
 });
