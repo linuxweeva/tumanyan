@@ -65,6 +65,12 @@ function handleUploadDropZone () {
         var type = $( this ).data( 'type' );
         uploadType = type;
         uploadBtn = $( this );
+        $( '.dz-hidden-input' ).attr( 'accept' , 'application/pdf' );
+    	window.drop.options.acceptedFiles = 'application/pdf';
+        if ( type === 'image' ) {
+       		$( '.dz-hidden-input' ).attr( 'accept' , 'image/*' );
+        	window.drop.options.acceptedFiles = 'image/*';
+        }
         e.preventDefault();
         openDz();
     });
@@ -75,7 +81,8 @@ function handleUploadDropZone () {
         this.options.autoProcessQueue = true;
     });
     drop.on( 'sending' , function(file, xhr, formData) {
-        uploadBtn.toggleClass( 'fa-upload fa-spinner fa-spin' );
+        uploadBtn.removeClass( 'fa-check fa-times fa-upload' );
+        uploadBtn.toggleClass( 'fa-spinner fa-spin' );
         formData.append( "bookId" , $( '[name="id"]' ).val() );
         formData.append( "type" , uploadType );
         $( '#submit' ).attr( 'disabled' , true );
@@ -92,15 +99,21 @@ function handleUploadDropZone () {
                 uploadBtn.toggleClass( 'fa-check fa-spinner fa-spin' );
                 var data = json.response;
                 var absolute_url = data[ 'absolute_url' ];
+                var $imgEl = $( 'img.thumbnail' );
+                console.log(uploadType,$imgEl)
+                if ( uploadType === 'image' && $imgEl && $imgEl.length ) {
+                	$imgEl.attr( 'src' , absolute_url );
+                }
                 $( '[data-input="' + uploadType + '"]' ).val( absolute_url );
                 // console.log(data);
+                Alert( json.message , 'success' );
             } else {
                 uploadBtn.toggleClass( 'fa-times fa-spinner fa-spin' );
-                // if ( undefined !== json.fileName ) {
-                //     errorFileNamesListFull.push( json.fileName + " </br>" );
-                //     errorFileNamesList.push( json.fileName.substring( 0 , 25 ) + "... </br>" );
-                // }
-                // setDzFileCount( --fileCount );
+            	if ( undefined !== json.message ) {
+                	Alert( json.message );
+            	} else {
+            		Alert( 'Error' );
+            	}
             }
         } else {
             alert( "Fatal error, please contact us" );

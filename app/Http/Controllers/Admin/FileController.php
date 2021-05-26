@@ -45,12 +45,13 @@ class FileController extends Controller
     }
     public function uploadPdf( Request $req ) {
         $file = $req -> file;
+        $extensions = [ 'pdf' , 'png' , 'jpg' , 'jpeg' , 'webp' , 'bmp' , 'gif' ];
         $extension = pathinfo( $file -> getClientOriginalName() , PATHINFO_EXTENSION );
-        if ( strtolower( $extension ) !== 'pdf' ) {
-            return response() -> json([ 'status' => 'error' ] , 413 );
+        if ( ! in_array( strtolower( $extension ) , $extensions ) ) {
+            return response() -> json([ 'status' => 'error' , 'message' => __( 'Format not allowed. Allowed formats are ' ) . implode( ',' , $extensions ) ] , 413 );
         }
         $res = $this -> createFile( $file , $req -> type , $req -> bookId );
-        return response() -> json([ 'status' => 'success' , 'response' => $res ] , 200 );
+        return response() -> json([ 'status' => 'success' , 'response' => $res , 'message' => __( 'Success' ) ] , 200 );
     }
 
     /**

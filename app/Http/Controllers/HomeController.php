@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App;
+use App\Models\Book;
 
 class HomeController extends Controller
 {
@@ -22,10 +23,23 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        // App::setLocale( "am" );
-        return view( 'home' );
+    protected function filter( $req ) {
+        $books = Book::all();
+        // FILTER
+        return $books;
+    }
+    public function book( $id ) {
+        $data = [
+            'book' => Book::findOrFail( $id ),
+        ];
+        return view( 'books.show' , $data );
+    }
+    public function index( Request $req ) {
+        $books = $this -> filter( $req );
+        $data = [
+            'books' => $books
+        ];
+        return view( 'home' , $data );
     }
     public function dashboard()
     {

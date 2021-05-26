@@ -19,6 +19,7 @@ require __DIR__.'/admin.php';
 Route::post( '/email.subscribe' , [ OtherController::class , 'emailSubscribe' ]); // do not change, used in js, fixed
 Route::middleware([ 'locale' ])->group(function () {
 	Route::get( '/' , [ HomeController::class , 'index' ]) -> name( 'home' );
+	Route::get( '/books/{id}' , [ HomeController::class , 'book' ]) -> name( 'home.books.show' );
 	// Route::get('/dashboard', function () {
 	//     return view('dashboard');
 	// }) -> middleware([ 'auth' ])->name('dashboard');

@@ -84,6 +84,20 @@
             <div class="" id='dropzoneDiv' style="display: none;"></div>
         </div>
 
+        <div class="form-group row">
+            <label class="col-12">{{ __( 'Image' ) }}</label>
+            <div class="col">
+                <input type="text" data-input="image" name="image_url" class="form-control" value="{{ old( 'image_url' ) }}" />
+            </div>
+            <div class="col-2 col-md-1">
+                <i class="fa fa-2x fa-upload mx-auto pointer upload_pdf" data-type="image"></i>
+            </div>
+            <div class="col-12">
+                <img src="{{ old( 'image_url' ) }}" class="thumbnail my-2 my-md-3" style="max-height: 80px;" />
+            </div>
+            <div class="" id='dropzoneDiv' style="display: none;"></div>
+        </div>
+
         <div class="form-group">
             <label>{{ __( 'Price' ) }}</label>
             <input type="text" class="form-control" name="price" value="{{ old( 'price' ) }}" />

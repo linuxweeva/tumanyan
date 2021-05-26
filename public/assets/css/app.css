@@ -63,3 +63,22 @@ label {
 }
 
 /*ACCOUNT*/
+
+
+
+/*HOME PAGE BOOKS*/
+.book-home-page-list-img {
+	height: 200px;
+	width: 100px;
+	object-fit: cover;
+}
+.book-home-page-list-wrapper {
+	position: relative;
+}
+.book-home-page-list-star {
+	font-size: 24px!important;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+/*HOME PAGE BOOKS*/

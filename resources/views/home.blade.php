@@ -9,9 +9,7 @@
     <p>Some text</p>
 </div>
 @include( 'partials.filter' )
-    <div class="row justify-content-center">
-        bla bla bla
-    </div>
+@include( 'books.home-list' )
 @include( 'partials.other-links' )
 @include( 'partials.email-subscribe' )
 </div>
