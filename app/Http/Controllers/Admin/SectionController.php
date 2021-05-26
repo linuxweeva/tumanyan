@@ -24,8 +24,8 @@ class SectionController extends Controller
     }
     public function store(Request $request) {
         $input = $request -> except( '_token' );
-        $book = Book::create( $input );
-        return redirect() -> route( 'sections.index' );
+        $section = Section::create( $input );
+        return redirect() -> route( 'sections.index' ) -> withStatus( __( 'Success' ) );
     }
     public function edit(Section $section)  {
         $data = [
@@ -38,11 +38,11 @@ class SectionController extends Controller
         $input = $request -> except( '_token' , '_method' );
         $id = $request -> id;
         $book = Section::findOrFail( $id ) -> update( $input );
-        return redirect() -> route( 'sections.index' );
+        return redirect() -> route( 'sections.index' ) -> withStatus( __( 'Success' ) );
     }
 
     public function delete( $id ) {
         Section::find( $id ) -> delete();
-        return redirect() -> back();
+        return redirect() -> back() -> withStatus( __( 'Success' ) );
     }
 }

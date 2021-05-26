@@ -18,9 +18,8 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->middleware( 'admin' );
+    public function __construct() {
+        $this -> middleware( 'admin' );
     }
     public function index()
     {
@@ -66,7 +65,7 @@ class BookController extends Controller
         $input[ 'price' ] = $input[ 'price' ] ?? 0;
         $book = Book::create( $input );
         File::where( 'type_id' , $tmpId ) -> update([ 'type_id' => $book -> id ]);
-        return redirect() -> route( 'books.index' );
+        return redirect() -> route( 'books.index' ) -> withStatus( __( 'Success' ) );
     }
 
     /**
@@ -108,7 +107,7 @@ class BookController extends Controller
         $input[ 'price' ] = $input[ 'price' ] ?? 0;
         $book = Book::findOrFail( $id ) -> update( $input );
         // File::where( 'type_id' , $tmpId ) -> update([ 'type_id' => $book -> id ]);
-        return redirect() -> route( 'books.index' );
+        return redirect() -> route( 'books.index' ) -> withStatus( __( 'Success' ) );
         dd($req->all());
     }
 
@@ -120,6 +119,6 @@ class BookController extends Controller
      */
     public function delete($id) {
         Book::find( $id )->delete();
-        return redirect() -> back();
+        return redirect() -> back() -> withStatus( __( 'Success' ) );
     }
 }

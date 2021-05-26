@@ -9,6 +9,9 @@ class Section extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    public function getCreatedAttribute() {
+        return date( env( 'DATE_SHOW_FORMAT' , 'Y-m-d H' ) , strtotime( $this -> created_at ) );
+    }
     public function getTitleAttribute() {
     	$locale = \App::currentLocale();
     	switch( $locale ) {

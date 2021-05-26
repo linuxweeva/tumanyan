@@ -23,10 +23,11 @@ class TypeController extends Controller
     }
     public function store(Request $request) {
         $input = $request -> except( '_token' );
-        $book = Book::create( $input );
-        return redirect() -> route( 'types.index' );
+        $input[ 'title' ] = $request -> title_am;
+        $type = Type::create( $input );
+        return redirect() -> route( 'types.index' ) -> withStatus( __( 'Success' ) );
     }
-    public function edit(Type $type)  {
+    public function edit( Type $type )  {
         $data = [
             'type' => $type
         ];
@@ -36,12 +37,12 @@ class TypeController extends Controller
     public function update(Request $request, Type $type) {
         $input = $request -> except( '_token' , '_method' );
         $id = $request -> id;
-        $book = Type::findOrFail( $id ) -> update( $input );
-        return redirect() -> route( 'types.index' );
+        $type = Type::findOrFail( $id ) -> update( $input );
+        return redirect() -> route( 'types.index' ) -> withStatus( __( 'Success' ) );
     }
 
     public function delete( $id ) {
         Type::find( $id ) -> delete();
-        return redirect() -> back();
+        return redirect() -> back() -> withStatus( __( 'Success' ) );
     }
 }

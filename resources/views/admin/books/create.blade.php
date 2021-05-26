@@ -3,6 +3,7 @@
 @section( 'content' )
 <div class="">
 	<h1 class="admin-heading">{{ __( 'Add a book' ) }}</h1>
+    @include( 'admin.partials.status-error' )
     <form class="form" method="POST" action="{{ route( 'books.store' ) }}">
         @csrf
         <input type="hidden" value="{{ $generatedId }}" name="id" required="" />

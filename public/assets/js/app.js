@@ -3,6 +3,7 @@ $( function() {
 		handleCarousel();
 		formResponsive();
 		handleTelInput();
+		handleEmailSubscription();
 	}
 	function handleTelInput() {
 		var input = $( '[name="phone"]' );
@@ -81,5 +82,40 @@ $.getScripts = function( arr , cb ) {
 		$.getScript( arr[ 1 ] , function( data, textStatus, jqxhr ) {
 			cb( data, textStatus, jqxhr );
 		});
+	});
+}
+
+
+
+function handleEmailSubscription() {
+	var subscriptionForm = $( '#email_subscription_form' );
+	var saveEmail = function( subscriptionForm ) {
+		subscriptionForm.find( 'input' ).attr( 'disabled' , true );
+		var reg = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+		var emailVal = subscriptionForm.find( 'input' ).val();
+		var isValidEmail = reg.test( emailVal );
+		if ( ! isValidEmail ) {
+			subscriptionForm.find( 'input' ).attr( 'disabled' , false );
+			Alert( translate( "There was an error" ) );
+			return;
+		};
+		$.post( '/email.subscribe' , { email: emailVal }).done(function( res ) {
+			subscriptionForm.find( 'input' ).val( '' );
+			subscriptionForm.find( 'input' ).attr( 'disabled' , true );
+			subscriptionForm.off( 'click keydown' );
+			Alert( translate( 'email.thanks' ) , 'success' );
+		})
+		.fail(function( res ) {
+			subscriptionForm.find( 'input' ).attr( 'disabled' , false );
+			Alert( translate( "There was an error" ) );
+		})
+	}
+	subscriptionForm.on( 'click' , 'button' , function() {
+		saveEmail( subscriptionForm );
+	});
+	subscriptionForm.on( 'keydown' , 'input' , function( e ) {
+		if ( e.which == 13 ) {
+			saveEmail( subscriptionForm );
+		}
 	});
 }

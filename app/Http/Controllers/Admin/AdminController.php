@@ -15,17 +15,11 @@ class AdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function home () {
+        return redirect() -> route( 'users.index' );
         return view( 'admin.home' );
     }
     public function loginView () {
         return view( 'admin.login' );
-    }
-    public function users () {
-        $users = User::where( 'id' , '!=' , Auth::user() -> id ) -> get();
-        $data = [
-            'users' => $users
-        ];
-        return view( 'admin.users' , $data );
     }
     public function login ( Request $req ) {
         $userCheckRole = User::whereEmail( $req -> email ) -> whereRole( 'admin' ) -> first();

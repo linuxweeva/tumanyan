@@ -15,6 +15,9 @@ class Book extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    public function getCreatedAttribute() {
+        return date( env( 'DATE_SHOW_FORMAT' , 'Y-m-d H' ) , strtotime( $this -> created_at ) );
+    }
     public function getPdfPartialUrlAttribute() {
     	$file = File::where( 'type_id' , $this -> id ) -> whereType( 'pdf_partial' ) -> first();
     	if ( $file ) {

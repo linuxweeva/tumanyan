@@ -23,8 +23,8 @@ class LanguageController extends Controller
     }
     public function store(Request $request) {
         $input = $request -> except( '_token' );
-        $book = Book::create( $input );
-        return redirect() -> route( 'languages.index' );
+        $language = Language::create( $input );
+        return redirect() -> route( 'languages.index' ) -> withStatus( __( 'Success' ) );
     }
     public function edit(Language $language)  {
         $data = [
@@ -37,11 +37,11 @@ class LanguageController extends Controller
         $input = $request -> except( '_token' , '_method' );
         $id = $request -> id;
         $book = Language::findOrFail( $id ) -> update( $input );
-        return redirect() -> route( 'languages.index' );
+        return redirect() -> route( 'languages.index' ) -> withStatus( __( 'Success' ) );
     }
 
     public function delete( $id ) {
         Language::find( $id ) -> delete();
-        return redirect() -> back();
+        return redirect() -> back() -> withStatus( __( 'Success' ) );
     }
 }

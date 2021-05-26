@@ -2,7 +2,8 @@
 
 @section( 'content' )
 <div class="">
-	<h1 class="admin-heading">{{ __( 'Add a book' ) }}</h1>
+	<h1 class="admin-heading">{{ __( 'Edit book' ) }}</h1>
+    @include( 'admin.partials.status-error' )
     <form class="form" method="POST" action="{{ route( 'books.update' , $book -> id ) }}">
         @csrf
         <input name="_method" type="hidden" value="PUT">

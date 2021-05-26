@@ -23,8 +23,8 @@ class AuthorController extends Controller
     }
     public function store(Request $request) {
         $input = $request -> except( '_token' );
-        $book = Book::create( $input );
-        return redirect() -> route( 'authors.index' );
+        $author = Author::create( $input );
+        return redirect() -> route( 'authors.index' ) -> withStatus( __( 'Success' ) );
     }
     public function edit(Author $author)  {
         $data = [
@@ -36,12 +36,12 @@ class AuthorController extends Controller
     public function update(Request $request, Author $author) {
         $input = $request -> except( '_token' , '_method' );
         $id = $request -> id;
-        $book = Author::findOrFail( $id ) -> update( $input );
-        return redirect() -> route( 'authors.index' );
+        $author = Author::findOrFail( $id ) -> update( $input );
+        return redirect() -> route( 'authors.index' ) -> withStatus( __( 'Success' ) );
     }
 
     public function delete( $id ) {
         Author::find( $id ) -> delete();
-        return redirect() -> back();
+        return redirect() -> back() -> withStatus( __( 'Success' ) );
     }
 }

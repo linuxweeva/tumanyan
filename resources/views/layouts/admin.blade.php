@@ -42,10 +42,25 @@
                     <ul class="navbar-nav mr-auto">
                         @authadmin
                             <li class="nav-item">
-                                <a href="{{ route( 'admin.users' ) }}" class="nav-link">{{ __( 'Users' ) }}</a>
+                                <a href="{{ route( 'users.index' ) }}" class="nav-link {{ Request::is( '*users*' ) ? 'active' : '' }}">{{ __( 'Users' ) }}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route( 'books.index' ) }}" class="nav-link">{{ __( 'Books' ) }}</a>
+                                <a href="{{ route( 'books.index' ) }}" class="nav-link {{ Request::is( '*books*' ) ? 'active' : '' }}">{{ __( 'Books' ) }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route( 'sections.index' ) }}" class="nav-link {{ Request::is( '*sections*' ) ? 'active' : '' }}">{{ __( 'Sections' ) }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route( 'authors.index' ) }}" class="nav-link {{ Request::is( '*authors*' ) ? 'active' : '' }}">{{ __( 'Authors' ) }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route( 'types.index' ) }}" class="nav-link {{ Request::is( '*types*' ) ? 'active' : '' }}">{{ __( 'Types' ) }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route( 'languages.index' ) }}" class="nav-link {{ Request::is( '*languages*' ) ? 'active' : '' }}">{{ __( 'Languages' ) }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route( 'subscriptions.index' ) }}" class="nav-link {{ Request::is( '*subscriptions*' ) ? 'active' : '' }}">{{ __( 'Subscriptions' ) }}</a>
                             </li>
                         @endauthadmin
                     </ul>
@@ -99,9 +114,12 @@
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" async type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     @yield( 'scripts_before' )
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/assets/js/common.js"></script>
     <script type="text/javascript" src="/assets/js/admin.js"></script>
     @yield( 'scripts' )
 </body>
