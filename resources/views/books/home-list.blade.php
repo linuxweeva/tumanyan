@@ -4,7 +4,8 @@
 		<div class="book-home-page-list-container mx-3">
 			<a class="book-home-page-list-wrapper h-100 d-block" href="{{ route( 'home.books.show' , $book -> id ) }}">
 				<i class="fa fa-star book-home-page-list-star text-warning" class="fa fa-star"></i>
-				<img class="book-home-page-list-img" src="{{ $book -> image_url }}" />
+				<!-- <img class="book-home-page-list-img" src="{{ $book -> image_url }}" /> -->
+				<img class="book-home-page-list-img" src="{{ $book -> firstPages[ 'full' ] }}" />
 				<p class="book-home-page-list-title">{{ $book -> title }}</p>
 			</a>
 		</div>

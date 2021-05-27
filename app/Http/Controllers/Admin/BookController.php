@@ -60,11 +60,15 @@ class BookController extends Controller
      */
     public function store(Request $req ) {
         // CHECK IF ID EXISTS MOVE FILES ID AND NEW RECORD ID
-        $input = $req -> except( 'id' , '_token' , 'pdf_url' , 'pdf_partial_url' );
+        $input = $req -> except( 'id' , '_token' , 'pdf_url' , 'pdf_partial_url' , 'image_url' );
         $tmpId = $req -> id;
         $input[ 'price' ] = $input[ 'price' ] ?? 0;
         $book = Book::create( $input );
-        File::where( 'type_id' , $tmpId ) -> update([ 'type_id' => $book -> id ]);
+        $bookId = $book -> id;
+        File::where( 'type_id' , $tmpId ) -> update([ 'type_id' => $bookId ]);
+        $uploadPath = env( 'PDF_PATH' );
+        $cmd = "mv ${uploadPath}/${tmpId} ${uploadPath}/${bookId}";
+        $res = exec( $cmd );
         return redirect() -> route( 'books.index' ) -> withStatus( __( 'Success' ) );
     }
 
@@ -102,7 +106,7 @@ class BookController extends Controller
      */
     public function update(Request $req, $id)
     {
-        $input = $req -> except( 'id' , '_token' , 'pdf_url' , 'pdf_partial_url' , '_method' );
+        $input = $req -> except( 'id' , '_token' , 'pdf_url' , 'pdf_partial_url' , '_method' , 'image_url' );
         $id = $req -> id;
         $input[ 'price' ] = $input[ 'price' ] ?? 0;
         $book = Book::findOrFail( $id ) -> update( $input );

@@ -52,6 +52,7 @@ function handleUploadDropZone () {
     if( ! dropContainer || ! dropContainer.length ) return; // no need for init
     Dropzone.autoDiscover = false;
     var uploadType;
+    var processing;
     var uploadBtn;
     window.drop = new Dropzone( "div#dropzoneDiv" ,
     {
@@ -61,7 +62,11 @@ function handleUploadDropZone () {
         acceptedFiles: "application/pdf",
         autoProcessQueue: true
     });
-    $( '.upload_pdf' ).on( 'click' , function( e ) {
+    $( '.upload' ).on( 'click' , function( e ) {
+        if ( processing === true ) {
+            e.preventDefault();
+            return;
+        }
         var type = $( this ).data( 'type' );
         uploadType = type;
         uploadBtn = $( this );
@@ -81,6 +86,7 @@ function handleUploadDropZone () {
         this.options.autoProcessQueue = true;
     });
     drop.on( 'sending' , function(file, xhr, formData) {
+        processing = true;
         uploadBtn.removeClass( 'fa-check fa-times fa-upload' );
         uploadBtn.toggleClass( 'fa-spinner fa-spin' );
         formData.append( "bookId" , $( '[name="id"]' ).val() );
@@ -91,6 +97,7 @@ function handleUploadDropZone () {
     drop.on( 'complete' , function( resp ) {
         console.log(resp);
         $( '#submit' ).attr( 'disabled' , false );
+        processing = false;
         if ( undefined !== resp.xhr && undefined !== resp.xhr.response ) {
             var response = resp.xhr.response;
             // if ( response == )

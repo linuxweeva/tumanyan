@@ -66,20 +66,20 @@
         <div class="form-group row">
             <label class="col-12">{{ __( 'PDF file' ) }} <span class="text-danger">*</span></label>
             <div class="col">
-                <input type="text" data-input="pdf" required="" class="form-control" name="pdf_url" value="{{ old( 'pdf_url' ) }}" />
+                <input type="text" data-input="full" required="" class="form-control" name="pdf_url" value="{{ old( 'pdf_url' ) }}" />
             </div>
             <div class="col-2 col-md-1">
-                <i class="fa fa-2x fa-upload mx-auto pointer upload_pdf" data-type="pdf"></i>
+                <i class="fa fa-2x fa-upload mx-auto pointer upload" data-type="full"></i>
             </div>
             <div class="" id='dropzoneDiv' style="display: none;"></div>
         </div>
         <div class="form-group row">
             <label class="col-12">{{ __( 'PDF partial' ) }}</label>
             <div class="col">
-                <input type="text" data-input="pdf_partial" name="pdf_partial_url" class="form-control" value="{{ old( 'pdf_partial_url' ) }}" />
+                <input type="text" data-input="partial" name="pdf_partial_url" class="form-control" value="{{ old( 'pdf_partial_url' ) }}" />
             </div>
             <div class="col-2 col-md-1">
-                <i class="fa fa-2x fa-upload mx-auto pointer upload_pdf" data-type="pdf_partial"></i>
+                <i class="fa fa-2x fa-upload mx-auto pointer upload" data-type="full"></i>
             </div>
             <div class="" id='dropzoneDiv' style="display: none;"></div>
         </div>
@@ -90,7 +90,7 @@
                 <input type="text" data-input="image" name="image_url" class="form-control" value="{{ old( 'image_url' ) }}" />
             </div>
             <div class="col-2 col-md-1">
-                <i class="fa fa-2x fa-upload mx-auto pointer upload_pdf" data-type="image"></i>
+                <i class="fa fa-2x fa-upload mx-auto pointer upload" data-type="image"></i>
             </div>
             <div class="col-12">
                 <img src="{{ old( 'image_url' ) }}" class="thumbnail my-2 my-md-3" style="max-height: 80px;" />

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App;
+use App\Helpers\PdfHelper;
 use App\Models\Book;
 
 class HomeController extends Controller
@@ -25,6 +26,11 @@ class HomeController extends Controller
      */
     protected function filter( $req ) {
         $books = Book::all();
+        // dd($books[6]->partialPages);
+        // dd($books[6]->firstPage);
+        // $res = PdfHelper::extractImages( 10 );
+        // dd($res);
+        // exit('ok');
         // FILTER
         return $books;
     }

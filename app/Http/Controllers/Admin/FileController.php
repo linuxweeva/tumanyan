@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\File;
+use App\Helpers\PdfHelper;
 
 class FileController extends Controller
 {
@@ -23,8 +24,7 @@ class FileController extends Controller
         $filePath = $file -> getClientOriginalName();
         $fileName = pathinfo( $filePath , PATHINFO_FILENAME );
         $extension = pathinfo( $filePath , PATHINFO_EXTENSION );
-        $rand = rand( 10 , 100 );
-        $fileDir = "/{$type}_{$rand}.{$extension}";
+        $fileDir = "/{$type}.{$extension}";
         $url = env( 'PDF_PATH_URL' ) . "/{$bookId}{$fileDir}";
         $absolute_url = env( 'APP_URL' ) . $url;
         $parentDir = env( 'PDF_PATH' ) . '/' . $bookId;
@@ -41,11 +41,12 @@ class FileController extends Controller
             'absolute_url' => $absolute_url,
         ];
         $fileRecord = File::create( $input );
+        PdfHelper::extractImages( $path , $type );
         return $fileRecord;
     }
     public function uploadPdf( Request $req ) {
         $file = $req -> file;
-        $extensions = [ 'pdf' , 'png' , 'jpg' , 'jpeg' , 'webp' , 'bmp' , 'gif' ];
+        $extensions = [ 'pdf' , 'png' , 'jpg' , 'jpeg' , 'webp' , 'webm' , 'bmp' , 'gif' ];
         $extension = pathinfo( $file -> getClientOriginalName() , PATHINFO_EXTENSION );
         if ( ! in_array( strtolower( $extension ) , $extensions ) ) {
             return response() -> json([ 'status' => 'error' , 'message' => __( 'Format not allowed. Allowed formats are ' ) . implode( ',' , $extensions ) ] , 413 );
