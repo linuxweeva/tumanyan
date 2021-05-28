@@ -12,7 +12,7 @@ class AuthorController extends Controller
         $this -> middleware( 'admin' );
     }
     public function index() {
-        $authors = Author::all();
+        $authors = Author::whereDeleted( 0 ) -> get();
         $data = [
             'authors' => $authors,
         ];
@@ -41,7 +41,7 @@ class AuthorController extends Controller
     }
 
     public function delete( $id ) {
-        Author::find( $id ) -> delete();
+        Author::find( $id ) -> update([ 'deleted' => 1 ]);
         return redirect() -> back() -> withStatus( __( 'Success' ) );
     }
 }

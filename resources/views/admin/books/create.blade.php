@@ -21,17 +21,17 @@
         </div>
         <div class="form-group">
             <label>{{ __( 'Author' ) }} <span class="text-danger">*</span></label>
-            <select class="form-control" name="author_id" required="">
+            <select class="form-control select2" data-autocomplete="{{ route( 'autocomplete.authors' ) }}" name="author_id" required="">
                 @foreach( $authors as $author )
-                <option value="{{ $author -> id }}">{{ $author -> title_am }}</option>
+                <option value="{{ $author -> id }}">{{ $author -> title }}</option>
                 @endforeach
             </select>
         </div>
         <div class="form-group">
             <label>{{ __( 'Section/Subsection' ) }} <span class="text-danger">*</span></label>
-            <select class="form-control" name="section_id" required="">
+            <select class="form-control select2" data-autocomplete="{{ route( 'autocomplete.sections' ) }}" name="section_id" required="">
                 @foreach( $sections as $section )
-                <option value="{{ $section -> id }}">{{ $section -> title_am }}</option>
+                <option value="{{ $section -> id }}">{{ $section -> title }}</option>
                 @endforeach
             </select>
         </div>
@@ -49,17 +49,17 @@
         </div>
         <div class="form-group">
             <label>{{ __( 'Language' ) }} <span class="text-danger">*</span></label>
-            <select class="form-control" name="language_id" required="">
+            <select data-autocomplete="{{ route( 'autocomplete.languages' ) }}" class="form-control select2" name="language_id" required="">
                 @foreach( $languages as $lang )
-                <option value="{{ $lang -> id }}">{{ $lang -> title_am }}</option>
+                <option value="{{ $lang -> id }}">{{ $lang -> title }}</option>
                 @endforeach
             </select>
         </div>
         <div class="form-group">
             <label>{{ __( 'Type' ) }} <span class="text-danger">*</span></label>
-            <select name="type_id" class="form-control" required="">
+            <select name="type_id" class="form-control select2" data-autocomplete="{{ route( 'autocomplete.types' ) }}" required="">
                 @foreach( $types as $type )
-                <option value="{{ $type -> id }}">{{ $type -> title_am }}</option>
+                <option value="{{ $type -> id }}">{{ $type -> title }}</option>
                 @endforeach
             </select>
         </div>

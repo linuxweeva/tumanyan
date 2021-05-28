@@ -8,6 +8,21 @@
 
 
 /*COMMON*/
+
+@font-face {
+  font-family: mmarc;
+  src: url(/assets/fonts/mmarc.otf);
+}
+@font-face {
+  font-family: mmarc;
+  src: url(/assets/fonts/mmarc-bold.woff);
+  font-weight: bold;
+}
+
+body {
+  font-family: mmarc;
+}
+
 .pointer {
 	cursor: pointer;
 }
@@ -35,7 +50,14 @@ label {
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .iti__flag {background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/img/flags@2x.png");}
 }
-
+.select2 {
+	width: 100%;
+}
+.select2-dropdown {
+	border-color: #80bdff;
+	outline: 0;
+	box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+}
 /*COMMON*/
 
 
@@ -78,7 +100,18 @@ label {
 .book-home-page-list-star {
 	font-size: 24px!important;
 	position: absolute;
-	top: 10px;
-	right: 10px;
+	top: 0;
+	right: 0;
+	-webkit-transition: all .3s ease;
+	-moz-transition:       all .3s ease;
+	-o-transition:          all .3s ease;
+	transition:                 all .3s ease;
+}
+.book-home-page-list-star.rotated {
+	-webkit-transform: rotate(15deg);
+	-moz-transform:      rotate(15deg);
+	-ms-transform:        rotate(15deg);
+	-o-transform:          rotate(15deg);
+	transform:               rotate(15deg);
 }
 /*HOME PAGE BOOKS*/

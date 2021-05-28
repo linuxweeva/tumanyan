@@ -38,10 +38,10 @@ class BookController extends Controller
      */
     protected function getMoreData() {
         $resp = [];
-        $resp[ 'authors' ] = Author::all();
-        $resp[ 'sections' ] = Section::all();
-        $resp[ 'languages' ] = Language::all();
-        $resp[ 'types' ] = Type::all();
+        $resp[ 'authors' ] = Author::whereDeleted( 0 )->get();
+        $resp[ 'sections' ] = Section::whereDeleted( 0 )->get();
+        $resp[ 'languages' ] = Language::whereDeleted( 0 )->get();
+        $resp[ 'types' ] = Type::whereDeleted( 0 )->get();
         $resp[ 'generatedId' ] = rand( 455425 , 2355553535353 );
         return $resp;
     }

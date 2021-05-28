@@ -12,7 +12,7 @@ class TypeController extends Controller
         $this -> middleware( 'admin' );
     }
     public function index() {
-        $types = Type::all();
+        $types = Type::whereDeleted( 0 ) -> get();
         $data = [
             'types' => $types,
         ];
@@ -42,7 +42,7 @@ class TypeController extends Controller
     }
 
     public function delete( $id ) {
-        Type::find( $id ) -> delete();
+        Type::find( $id ) -> update([ 'deleted' => 1 ]);
         return redirect() -> back() -> withStatus( __( 'Success' ) );
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Favorite;
 
 class User extends Authenticatable
 {
@@ -13,6 +14,15 @@ class User extends Authenticatable
 
     public function getCreatedAttribute() {
         return date( env( 'DATE_SHOW_FORMAT' , 'Y-m-d H' ) , strtotime( $this -> created_at ) );
+    }
+    public function favorites() {
+        return $this -> hasMany( Favorite::class , 'user_id' , 'id' );
+    }
+    public function getFavoritesListAttribute() {
+        return $this -> favorites() -> pluck( 'book_id' ) -> toArray();
+    }
+    public function hasFavorite( $bookId ) {
+        return in_array( $bookId , $this -> favoritesList );
     }
     /**
      * The attributes that are mass assignable.

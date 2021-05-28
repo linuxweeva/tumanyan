@@ -12,7 +12,7 @@ class LanguageController extends Controller
         $this -> middleware( 'admin' );
     }
     public function index() {
-        $languages = Language::all();
+        $languages = Language::whereDeleted( 0 ) -> get();
         $data = [
             'languages' => $languages,
         ];
@@ -41,7 +41,7 @@ class LanguageController extends Controller
     }
 
     public function delete( $id ) {
-        Language::find( $id ) -> delete();
+        Language::find( $id ) -> update([ 'deleted' => 1 ]);
         return redirect() -> back() -> withStatus( __( 'Success' ) );
     }
 }

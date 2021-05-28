@@ -9,6 +9,7 @@ use App\Models\Author;
 use App\Models\Section;
 use App\Models\Language;
 use App\Models\Type;
+use App\Models\Favorite;
 
 
 class Book extends Model
@@ -34,6 +35,22 @@ class Book extends Model
     public function getPdfAvailablettribute() {
         return File::where( 'type_id' , $this -> id ) -> whereType( 'pdf' ) -> first() -> absolute_url;
     }
+    // public function inFavorite() {
+        // return $this -> favorite()->
+        // where( 'user_id' , auth() -> user() -> id )->
+        // exists();
+    // }
+    // public function favorite() {
+        // return $this -> hasOne( Favorite::class , 'book_id' , 'id' );
+        // if ( auth() -> user() ) {
+        //     return ::where( 'book_id' , $this -> id ) -> where( 'user_id' , auth() -> user() -> id ) -> count() > 0;
+        // }
+        // return false;
+    // }
+    // public function scopeFavorite ( $query ) {
+        // return $query -> whereHas( 'favorite' );
+    // }
+
     protected function getFirstPage ( $path , $id , $type = "full" ) {
         $output_format = env( "PAGE_FORMAT" );
         $prefix = env( "PAGE_PREFIX" );

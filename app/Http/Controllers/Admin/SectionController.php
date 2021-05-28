@@ -13,7 +13,7 @@ class SectionController extends Controller
         $this -> middleware( 'admin' );
     }
     public function index() {
-        $sections = Section::all();
+        $sections = Section::whereDeleted( 0 )->get();
         $data = [
             'sections' => $sections,
         ];
@@ -42,7 +42,7 @@ class SectionController extends Controller
     }
 
     public function delete( $id ) {
-        Section::find( $id ) -> delete();
+        Section::find( $id ) -> update([ 'deleted' => 1 ]);
         return redirect() -> back() -> withStatus( __( 'Success' ) );
     }
 }

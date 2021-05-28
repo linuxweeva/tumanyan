@@ -35,6 +35,7 @@ Route::middleware([ 'locale' ])->group(function () {
 
 
 Route::middleware([ 'locale' , 'auth' ])->group(function () {
+	Route::post( 'favorites.toggle' , [ OtherController::class , 'toggle_favorite' ]);
 	Route::get( 'account' , [ AccountController::class , 'index' ]) -> name( 'account' );
 	Route::get( 'account.library' , [ AccountController::class , 'library' ]) -> name( 'account.library' );
 	

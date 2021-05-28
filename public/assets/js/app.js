@@ -1,9 +1,47 @@
+var API = {
+	email_subscribe: '/email.subscribe',
+	favorites_toggle: '/favorites.toggle',
+}
 $( function() {
 	function initee() {
+		handleFavorites();
 		handleCarousel();
 		formResponsive();
 		handleTelInput();
 		handleEmailSubscription();
+	}
+	function handleFavorites () {
+		// var container = $( '.book-home-page-list-container' );
+		var el = $( '.fa-star' );
+		if ( ! el || ! el.length ) return;
+		// if ( ! container || ! container.length ) return;
+		el.on( 'click' , function() {
+			$( this ).toggleClass( 'text-warning text-secondary' );
+			// FILTERS
+			var parentForm = $( this ).closest( 'form' );
+			if ( ! parentForm || ! parentForm.length ) return;
+			var filterActive = $( this ).hasClass( 'text-warning' ) ? 'true' : 'false';
+			parentForm.find( 'input[name="favorite"]' ).val( filterActive );
+			// FILTERS
+		});
+		// container.on( 'click' , '.toggle-favorite' , function() {
+		$( '.book-home-page-list-wrapper' ).on( 'click' , function ( e ) {
+			if ( $( e.target ).is( '.toggle-favorite' ) ) {
+				e.preventDefault();
+				var that = $( e.target );
+				var id = that.data( 'id' );
+				if ( ! id ) return;
+				$.post( API.favorites_toggle , { id: id } ).done(function( res ) {
+					// that.toggleClass( 'text-warning text-secondary' );
+				})
+				.fail(function( err ) {
+					Alert( translate( "There was an error" ) );
+				})
+				.always( function() {
+					that.toggleClass( 'rotated' );
+				});
+			}
+		});
 	}
 	function handleTelInput() {
 		var input = $( '[name="phone"]' );
@@ -72,21 +110,6 @@ $( function() {
 });
 
 
-function loadCss( link ) {
-	var rand = parseInt( Math.random() * 1000 );
-	$( "head" ).append( "<link id='id_" + rand + "' href='" + link + "' type='text/css' rel='stylesheet' />" );
-}
-
-$.getScripts = function( arr , cb ) {
-	$.getScript( arr[ 0 ] , function( data, textStatus, jqxhr ) {
-		$.getScript( arr[ 1 ] , function( data, textStatus, jqxhr ) {
-			cb( data, textStatus, jqxhr );
-		});
-	});
-}
-
-
-
 function handleEmailSubscription() {
 	var subscriptionForm = $( '#email_subscription_form' );
 	var saveEmail = function( subscriptionForm ) {
@@ -99,7 +122,7 @@ function handleEmailSubscription() {
 			Alert( translate( "There was an error" ) );
 			return;
 		};
-		$.post( '/email.subscribe' , { email: emailVal }).done(function( res ) {
+		$.post( API.email_subscribe , { email: emailVal }).done(function( res ) {
 			subscriptionForm.find( 'input' ).val( '' );
 			subscriptionForm.find( 'input' ).attr( 'disabled' , true );
 			subscriptionForm.off( 'click keydown' );

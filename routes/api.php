@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::group([ 'prefix' => 'autocomplete' ] , function () {
+    Route::get( 'books' , [ Api\OtherController::class , 'books' ]) -> name( 'autocomplete.books' );
+    Route::get( 'authors' , [ Api\OtherController::class , 'authors' ]) -> name( 'autocomplete.authors' );
+    Route::get( 'sections' , [ Api\OtherController::class , 'sections' ]) -> name( 'autocomplete.sections' );
+    Route::get( 'languages' , [ Api\OtherController::class , 'languages' ]) -> name( 'autocomplete.languages' );
+    Route::get( 'types' , [ Api\OtherController::class , 'types' ]) -> name( 'autocomplete.types' );
+    // Route::get( 'publish_info' , [ Api\OtherController::class , 'publish_info' ]) -> name( 'autocomplete.publish_info' );
 });
