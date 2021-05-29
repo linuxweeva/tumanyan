@@ -18,18 +18,21 @@
                 <!-- Authentication Links -->
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ App::currentLocale() }}
+                        <img src="/assets/img/flags/{{ App::currentLocale() }}.png">
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route( 'setLocale' , 'am' ) }}">
                             <img src="/assets/img/flags/am.png">
+                            {{ __( "Arm" ) }}
                         </a>
                         <a class="dropdown-item" href="{{ route( 'setLocale' , 'ru' ) }}">
                             <img src="/assets/img/flags/ru.png">
+                            {{ __( "Rus" ) }}
                         </a>
                         <a class="dropdown-item" href="{{ route( 'setLocale' , 'en' ) }}">
                             <img src="/assets/img/flags/en.jpg">
+                            {{ __( "Eng" ) }}
                         </a>
                     </div>
                 </li>
