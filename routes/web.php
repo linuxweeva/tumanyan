@@ -15,7 +15,7 @@ use Auth;
 
 require __DIR__.'/admin.php';
 
-
+Route::get( 'test' , [ TestController::class , 'index' ]);
 Route::post( '/email.subscribe' , [ OtherController::class , 'emailSubscribe' ]); // do not change, used in js, fixed
 Route::middleware([ 'locale' ])->group(function () {
 	Route::get( '/' , [ HomeController::class , 'index' ]) -> name( 'home' );
