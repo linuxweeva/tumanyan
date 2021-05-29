@@ -18,7 +18,7 @@ class OtherController extends Controller
 		$book = Book::findOrFail( $req -> id );
 		$bookId = $req -> input( 'id' );
 		$data = [
-			'user_id' => auth() -> user() -> id,
+			'user_id' => Auth::id(),
 			'book_id' => $bookId,
 		];
 		$record = Favorite::where( $data ) -> first();
@@ -38,7 +38,7 @@ class OtherController extends Controller
 	    	$subscription = new Subscription;
 	    	$subscription -> email = $email;
 	    	if ( Auth::check() ) {
-	    		$userId = auth() -> user() -> id;
+	    		$userId = Auth::id();
 	    		if ( Subscription::whereUserId( $userId ) -> count() > 3 ) { // no adequate user wants to subscribe with all of his emails
 	    			exit;
 	    		}
