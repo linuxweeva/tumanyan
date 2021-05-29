@@ -30,11 +30,11 @@ Route::middleware([ 'locale' ])->group(function () {
 	Route::get( 'reading-room' , [ HomeController::class , 'readingRoom' ]) -> name( 'reading.room' );
 	Route::get( 'about' , [ StaticController::class , 'about' ]) -> name( 'about' );
 	Route::get( 'donation' , [ StaticController::class , 'donation' ]) -> name( 'donation' );
-	Auth::routes();
+	Auth::routes(['verify' => true]);
 });
 
 
-Route::middleware([ 'locale' , 'auth' ])->group(function () {
+Route::middleware([ 'locale' , 'auth' , 'verified' ])->group(function () {
 	Route::get( 'account.library' , [ HomeController::class , 'account_library' ]) -> name( 'account.library' );
 	Route::post( 'favorites.toggle' , [ OtherController::class , 'toggle_favorite' ]);
 	Route::get( 'account' , [ AccountController::class , 'index' ]) -> name( 'account' );
