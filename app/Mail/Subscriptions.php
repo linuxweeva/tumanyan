@@ -29,7 +29,9 @@ class Subscriptions extends Mailable
      */
     public function build()
     {
-        // return $this -> markdown( 'mail.subscriptions_markdown' )->with( $this -> data );
-        return $this -> view( 'mail.subscriptions' )->with(['content' => $this -> data['content'] ] );
+       // return $this -> markdown( 'mail.subscriptions_markdown' )->with( $this -> data );
+        return $this -> view( 'mail.subscriptions' )->with([
+            'content' => $this -> data[ 'content' ]
+        ]);
     }
 }

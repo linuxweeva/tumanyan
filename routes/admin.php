@@ -28,4 +28,6 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'admin' , 'locale' ] ] , f
 	Route::get( '/languages.delete/{id}' , [ LanguageController::class , 'delete' ]) -> name( 'languages.delete' );
 	Route::get( '/sections.delete/{id}' , [ SectionController::class , 'delete' ]) -> name( 'sections.delete' );
 	// CUSTOM DELETE ROUTES
+	// CUSTOM ROUTES
+	// CUSTOM ROUTES
 });

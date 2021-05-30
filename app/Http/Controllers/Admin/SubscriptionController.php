@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Subscription;
 use App\Models\Message;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Mail\Subscriptions;
+use Illuminate\Support\Facades\Mail;
 
 class SubscriptionController extends Controller
 {
@@ -14,7 +17,7 @@ class SubscriptionController extends Controller
     }
     public function index () {
         $subscriptions = Subscription::all();
-        $messages = Message::all();
+        $messages = Message::orderBy( 'id' , 'DESC' )->take( 5 ) -> get();
         $data = [
             'subscriptions' => $subscriptions,
             'messages' => $messages
@@ -27,9 +30,8 @@ class SubscriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function editor( Request $req )
     {
-        //
     }
 
     /**
@@ -38,9 +40,22 @@ class SubscriptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $req) {
+        $content = $req -> input( 'content' );
+        $message = new Message;
+        $message -> content = $content;
+        $message -> save();
+        $userIds = $req -> input( 'user_ids' );
+        $xpl = explode( ',' , $userIds );
+        $data = [
+            'content' => $content,
+        ];
+        $userEmails = User::whereIn( 'id' , $xpl ) -> pluck( 'email' ) -> toArray();
+        $firstEmail = array_pop( $userEmails );
+        Mail::to( $firstEmail ) -> cc( $userEmails ) -> send( new Subscriptions( $data ) );
+        // foreach ( $userEmails as $key => $email ) {
+        // }
+        return redirect() -> route( 'subscriptions.index' ) -> withStatus( __( 'Message sent' ) );
     }
 
     /**
