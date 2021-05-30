@@ -42,9 +42,11 @@ class SubscriptionController extends Controller
      */
     public function store(Request $req) {
         $content = $req -> input( 'content' );
-        $message = new Message;
-        $message -> content = $content;
-        $message -> save();
+        try {
+            $message = new Message;
+            $message -> content = $content;
+            $message -> save();
+        } catch ( \Exception $e ) {}
         $userIds = $req -> input( 'user_ids' );
         $xpl = explode( ',' , $userIds );
         $data = [
@@ -56,6 +58,7 @@ class SubscriptionController extends Controller
         // foreach ( $userEmails as $key => $email ) {
         // }
         return redirect() -> route( 'subscriptions.index' ) -> withStatus( __( 'Message sent' ) );
+        exit( "<html>{$content}</html>" );
     }
 
     /**

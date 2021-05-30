@@ -35,7 +35,7 @@
             @csrf
             <input type="hidden" name="user_ids" value="1, 2,3,4,5,6" />
             <div class="form-group">
-                <textarea name="content" id="content" required="" class="form-control"></textarea>
+                <textarea name="content" id="wysiwyg" class="form-control" rows="5"></textarea>
             </div>
             <div class="form-group">
                 <button class="btn btn-primary" id="sendSubscription">
@@ -45,6 +45,8 @@
             </div>
         </form>
     </div>
+    <hr>
+    <hr>
     <div class="">
         <h1 class="admin-heading">{{ __( 'Sent Messages' ) }}</h1>
         <table id='data-table-1' class="table table-striped">
@@ -71,25 +73,20 @@
 @endsection
 
 @section( 'scripts' )
-<script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
 <script type="text/javascript">
     var input = $( 'form input[name="user_ids"]' );
-    var contentArea = $( 'form textarea' );
+    // var contentArea = $( 'form textarea' );
     $( 'form' ).on( 'submit' , function( e ) {
         if ( ! input.val().length ) {
             e.preventDefault();
             Alert( translate( 'Please choose users' ) );
             return;
         }
-        if ( contentArea.val().length < 10 ) {
-            e.preventDefault();
-            Alert( translate( 'Please input content' ) );
-            return;
-        }
+        // if ( contentArea.val().length < 10 ) {
+        //     e.preventDefault();
+        //     Alert( translate( 'Please input content' ) );
+        //     return;
+        // }
     });
-    $( function() {
-        CKEDITOR.replace( 'content', {
-        });
-    })
 </script>
 @endsection

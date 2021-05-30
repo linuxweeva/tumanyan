@@ -32,6 +32,6 @@ class Subscriptions extends Mailable
        // return $this -> markdown( 'mail.subscriptions_markdown' )->with( $this -> data );
         return $this -> view( 'mail.subscriptions' )->with([
             'content' => $this -> data[ 'content' ]
-        ]);
+        ]) -> subject( env( "SUBSCRIPTION_MAIL_SUBJECT" ) );
     }
 }
