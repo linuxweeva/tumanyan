@@ -1,4 +1,22 @@
 <?php
+    // OVERRIDING laravel trans or __ function, to take or put from db
+    function trans($key = null, $replace = [], $locale = null) {
+        $locale = app() -> currentLocale();
+        $row = App\Models\Translation::where( 'key' , $key ) -> first();
+        if ( null !== $row ) {
+            $row = $row -> toArray();
+            return $row[ $locale ];
+        } else {
+            $row = new App\Models\Translation;
+            $row -> key = $key;
+            $row -> am = $key;
+            $row -> ru = $key;
+            $row -> en = $key;
+            $row -> save();
+            return $key;
+        }
+    }
+    // OVERRIDING laravel trans or __ function, to take or put from db
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;

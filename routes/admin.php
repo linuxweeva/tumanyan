@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Route;
 use Auth;
 
-Route::group([ 'prefix' => 'admin', 'middleware' => [ 'locale' ] ] , function () {
+Route::group([ 'prefix' => 'admin', 'middleware' => [ 'locale' , 'guest' ] ] , function () {
 	Route::get( 'log-in' , [ AdminController::class , 'loginView' ]) -> name( 'admin.login' );
 	Route::post( 'log-in' , [ AdminController::class , 'login' ]) -> name( 'admin.login' );
 });
 Route::group([ 'prefix' => 'admin', 'middleware' => [ 'admin' , 'locale' ] ] , function () {
 	Route::get( '/' , [ AdminController::class , 'home' ]) -> name( 'admin.home' );
+	// OTHER
 	Route::post( '/upload-pdf' , [ FileController::class , 'uploadPdf' ]) -> name( 'admin.uploadPdf' );
+	Route::get( 'translations' , [ TranslationController::class , 'index' ]) -> name( 'admin.translations' );
+	Route::post( 'translations' , [ TranslationController::class , 'update' ]);
+	// OTHER
 	// RESOURCES
 	Route::resource( 'users' , UserController::class );
 	Route::resource( 'books' , BookController::class );

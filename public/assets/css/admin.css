@@ -13,3 +13,7 @@ body {
 .nav-link.active {
 	font-weight: bold;
 }
+
+nav svg {
+	width: 20px;
+}
